@@ -3,10 +3,13 @@ package com.epam.mjc.io;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class FileReader {
 
+    private static final Logger LOGGER = Logger.getLogger(String.valueOf(FileReader.class));
 
     public Profile getDataFromFile(File file) {
 
@@ -22,20 +25,25 @@ public class FileReader {
 
             while (line != null) {
 
-                if(line.split(":", 2)[0].equals("Name")){
-                    name = line.split(": ", 2)[1];
-                } else if(line.split(":", 2)[0].equals("Age")){
-                    age = Integer.parseInt(line.split(": ", 2)[1]);
-                } else if(line.split(":", 2)[0].equals("Email")){
-                    email = line.split(": ", 2)[1];
-                } else if(line.split(":", 2)[0].equals("Phone")){
-                    phone = Long.parseLong(line.split(": ", 2)[1]);
+                switch(line.split(":", 2)[0]){
+                    case "Name":
+                        name = line.split(": ", 2)[1];
+                        break;
+                    case "Age":
+                        age = Integer.parseInt(line.split(": ", 2)[1]);
+                        break;
+                    case "Email":
+                        email = line.split(": ", 2)[1];
+                        break;
+                    case "Phone":
+                        phone = Long.parseLong(line.split(": ", 2)[1]);
+                        break;
                 }
 
                 line = reader.readLine();
             }
         } catch (IOException ex){
-            System.out.print(ex.getMessage());
+            LOGGER.log(Level.SEVERE, ex.getMessage());
         }
 
         return new Profile(name, age, email, phone);
