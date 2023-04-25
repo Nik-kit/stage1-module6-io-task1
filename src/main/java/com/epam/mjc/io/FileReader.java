@@ -38,6 +38,11 @@ public class FileReader {
                     case "Phone":
                         phone = Long.parseLong(line.split(": ", 2)[1]);
                         break;
+                    default:
+                        name = null;
+                        age = null;
+                        email = null;
+                        phone = null;
                 }
 
                 line = reader.readLine();
